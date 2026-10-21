@@ -1,0 +1,37 @@
+# Optional Render Blueprint. Nothing is created until you choose "New > Blueprint" in Render and apply it.
+# You can instead create the database and web service by hand: see docs/DEPLOY.md.
+databases:
+  - name: LetsReact_AI-db
+    plan: basic-256mb   # Render's free database expires after 30 days; use a paid plan for real users.
+    databaseName: LetsReact_AI
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: LetsReact_AI-api
+    runtime: node
+    rootDir: server
+    # --include=dev is needed because Render sets NODE_ENV=production, which would otherwise skip TypeScript.
+    buildCommand: npm ci --include=dev && npm run build
+    # Applies pending migrations, then starts the API. Migrations only ever add; they never reset data.
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: LetsReact_AI-db
+          property: connectionString
+      - key: TRUST_PROXY
+        value: "2"
+      - key: APP_ORIGIN
+        sync: false   # you enter this in the Render dashboard: https://your-app.vercel.app
+      - key: ALLOW_REGISTRATION
+        value: "true"
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

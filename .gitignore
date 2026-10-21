@@ -1,0 +1,35 @@
+# Dependencies and build output
+node_modules/
+dist/
+server/dist/
+*.tsbuildinfo
+
+# Secrets: real env files stay local, examples stay tracked
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+*.pem
+*.key
+
+# Logs, coverage, caches
+*.log
+npm-debug.log*
+coverage/
+.vite/
+.cache/
+.vercel/
+
+# Local backups and database dumps
+backups/
+*.sql.gz
+*.dump
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
