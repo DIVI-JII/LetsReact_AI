@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://REPLACE-WITH-YOUR-RENDER-HOST.invalid/api/:path*"
+      "destination": "https://letsreact-ai.onrender.com/api/:path*"
     },
     {
       "source": "/((?!api/).*)",
